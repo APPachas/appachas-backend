@@ -24,6 +24,7 @@ export class UserController {
   @Get(':id')
   async findOne(@Res() res: Response, @Param('id') id: string) {
     const user = await this.userService.findOne(id)
+    if (user === null) return res.status(HttpStatus.NOT_FOUND).send()
     return res.status(HttpStatus.OK).json(user)
   }
 
