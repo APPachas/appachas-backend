@@ -5,6 +5,8 @@ import { ExpenseSchema } from '../infrastructure/repository/schemas/expense.sche
 import ExpenseFactory from './factory/expense.factory'
 import CreateExpenseUseCase from './createExpense.usecase'
 import ExpenseRepositoryMongo from '../infrastructure/repository/expense.repository.mongo'
+import { EXPENSE_REPOSITORY } from '../../../core/types'
+import FindExpensesByGroupUseCase from './findExpensesByGroup.usecase'
 
 @Module({
   imports: [
@@ -19,11 +21,12 @@ import ExpenseRepositoryMongo from '../infrastructure/repository/expense.reposit
   providers: [
     ExpenseFactory,
     CreateExpenseUseCase,
+    FindExpensesByGroupUseCase,
     {
-      provide: 'ExpenseRepository',
+      provide: EXPENSE_REPOSITORY,
       useClass: ExpenseRepositoryMongo,
     },
   ],
-  exports: [ExpenseFactory, CreateExpenseUseCase],
+  exports: [ExpenseFactory, CreateExpenseUseCase, FindExpensesByGroupUseCase],
 })
 export class ApplicationModule {}

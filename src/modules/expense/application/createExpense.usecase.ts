@@ -3,9 +3,7 @@ import ExpenseFactory from './factory/expense.factory'
 import { ExpenseRepository } from '../domain/ports/expense.repository'
 import { Optional } from 'typescript-optional'
 import Expense from '../domain/expense'
-
-//TODO SACAR A FICHERO APARTE
-const EXPENSE_REPOSITORY = 'ExpenseRepository'
+import { EXPENSE_REPOSITORY } from '../../../core/types'
 
 @Injectable()
 export default class CreateExpenseUseCase {

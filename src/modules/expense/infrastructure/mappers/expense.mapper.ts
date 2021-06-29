@@ -4,7 +4,7 @@ import { ExpenseDto } from '../repository/schemas/expense.schema'
 
 export default class ExpenseMapper {
   public static toDomain(expenseEntity: ExpenseDto | null): Optional<Expense> {
-    if (expenseEntity !== null) {
+    if (expenseEntity === null) {
       return Optional.empty<Expense>()
     }
     const expense = new Expense(
@@ -16,5 +16,14 @@ export default class ExpenseMapper {
       expenseEntity.group,
     )
     return Optional.of(expense)
+  }
+
+  static toDomains(expensesEntity: ExpenseDto[]): Expense[] {
+    const expenses = new Array<Expense>()
+    expensesEntity.forEach(expenseEntity => {
+      const expense = this.toDomain(expenseEntity)
+      expenses.push(expense.get())
+    })
+    return expenses
   }
 }

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
+import { GroupID, UserID } from '../../../../../core/types'
 
 export type ExpenseDto = Expense & Document
 
@@ -18,10 +19,10 @@ class Expense {
   paymentDate: Date
 
   @Prop({ required: true })
-  user: string
+  user: UserID
 
   @Prop({ required: true })
-  group: string
+  group: GroupID
 }
 
 export const ExpenseSchema = SchemaFactory.createForClass(Expense)
