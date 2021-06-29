@@ -1,21 +1,27 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
 
-export type UserDocument = Expense & Document
+export type ExpenseDto = Expense & Document
 
 @Schema({
   timestamps: true,
   versionKey: false,
 })
-export class Expense {
+class Expense {
   @Prop({ required: true })
-  name: string
+  price: number
 
   @Prop({ required: true })
-  email: string
+  description: string
 
   @Prop({ required: true })
-  password: string
+  paymentDate: Date
+
+  @Prop({ required: true })
+  user: string
+
+  @Prop({ required: true })
+  group: string
 }
 
 export const ExpenseSchema = SchemaFactory.createForClass(Expense)

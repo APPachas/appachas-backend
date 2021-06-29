@@ -1,19 +1,21 @@
 import { Inject, Injectable } from '@nestjs/common'
 import ExpenseFactory from './factory/expense.factory'
 import { ExpenseRepository } from '../domain/ports/expense.repository'
-import ExpenseCommand from './commands/expense.commands'
 import { Optional } from 'typescript-optional'
 import Expense from '../domain/expense'
+
+//TODO SACAR A FICHERO APARTE
+const EXPENSE_REPOSITORY = 'ExpenseRepository'
 
 @Injectable()
 export default class CreateExpenseUseCase {
   constructor(
-    @Inject('ExpenseRepository') private expenseRepository: ExpenseRepository,
+    @Inject(EXPENSE_REPOSITORY) private expenseRepository: ExpenseRepository,
     private expenseFactory: ExpenseFactory,
   ) {}
 
-  public handler(expenseCommand: ExpenseCommand): Promise<Optional<Expense>> {
-    const expense = this.expenseFactory.createProduct(expenseCommand)
-    return this.expenseRepository.create(expense)
+  public handler(expense: Expense): Promise<Optional<Expense>> {
+    const newExpense = this.expenseFactory.createExpense(expense)
+    return this.expenseRepository.createExpense(newExpense)
   }
 }
