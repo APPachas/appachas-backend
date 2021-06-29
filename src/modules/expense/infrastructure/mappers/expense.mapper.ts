@@ -17,13 +17,4 @@ export default class ExpenseMapper {
     )
     return Optional.of(expense)
   }
-
-  public static toDomains(expensesEntity: ExpenseDto[]): Expense[] {
-    const expenses = new Array<Expense>()
-    expensesEntity.forEach(expenseEntity => {
-      const expense = this.toDomain(expenseEntity)
-      expenses.push(expense.get())
-    })
-    return expenses
-  }
 }
