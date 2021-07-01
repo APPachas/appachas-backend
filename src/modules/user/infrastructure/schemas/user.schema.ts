@@ -7,7 +7,7 @@ export type UserDocument = User & Document
   timestamps: true,
   versionKey: false,
 })
-export class User {
+class User {
   @Prop({ required: true })
   name: string
 

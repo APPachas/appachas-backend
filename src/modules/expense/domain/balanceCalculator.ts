@@ -1,4 +1,4 @@
-import UserTmp from './users'
+import User from '../../user/domain/users'
 import Expense from './expense'
 
 class UserBalance {
@@ -7,22 +7,18 @@ class UserBalance {
 
 export class BalanceCalculator {
   private userBalances: UserBalance[] = []
-  constructor(users: UserTmp[]) {
+  constructor(users: User[]) {
     users.forEach(user => {
       const newUserBalance = new UserBalance(user.id, user.name, 0)
       this.userBalances = [...this.userBalances, newUserBalance]
     })
   }
 
-  Calculate(expenses: Expense[]): UserBalance[] {
-    if (expenses.length < 1) return this.userBalances
+  GetBalance(expenses: Expense[]): UserBalance[] {
     this.ResetBalance()
-    const initialBalance = 0
-    const totalExpenses = expenses.reduce(
-      (total, currentExpense) => total - currentExpense.price,
-      initialBalance,
-    )
-    const initialBalancePerUser = totalExpenses / this.userBalances.length
+    if (expenses.length < 1) return this.userBalances
+
+    const initialBalancePerUser = this.GetInitialBalancePerUser(expenses)
 
     this.userBalances.forEach(userBalance => {
       userBalance.balance = expenses.reduce(
@@ -34,7 +30,16 @@ export class BalanceCalculator {
     return this.userBalances
   }
 
-  ResetBalance(): void {
+  private GetInitialBalancePerUser(expenses: Expense[]): number {
+    const initialBalance = 0
+    const totalExpenses = expenses.reduce(
+      (total, currentExpense) => total - currentExpense.price,
+      initialBalance,
+    )
+    return totalExpenses / this.userBalances.length
+  }
+
+  private ResetBalance(): void {
     this.userBalances.forEach(userBalance => (userBalance.balance = 0))
   }
 }

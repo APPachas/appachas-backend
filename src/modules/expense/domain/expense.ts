@@ -1,6 +1,6 @@
 import PriceProductLessZeroException from './exceptions/price-product-less-zero.exception'
 import { ExpenseID } from '../../../core/types'
-//TODO TEST
+
 export default class Expense {
   constructor(
     readonly price: number,

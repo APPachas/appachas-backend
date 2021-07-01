@@ -1,7 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common'
-import ExpenseFactory from './factory/expense.factory'
 import { ExpenseRepository } from '../domain/ports/expense.repository'
-import { Optional } from 'typescript-optional'
 import Expense from '../domain/expense'
 import { EXPENSE_REPOSITORY, GroupID } from '../../../core/types'
 

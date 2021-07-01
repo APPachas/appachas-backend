@@ -2,7 +2,7 @@ export interface ExpenseResponseDto {
   id: string
   price: number
   description: string
-  paymentDate: Date
+  paymentDate: string
   user: string
   group: string
 }

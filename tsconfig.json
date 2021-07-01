@@ -14,7 +14,7 @@
     "strict": false,
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true
   }
 }

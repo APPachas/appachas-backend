@@ -1,22 +1,22 @@
 import { BalanceCalculator } from './balanceCalculator'
 import Expense from './expense'
-import UserTmp from './users'
+import User from '../../user/domain/users'
 
 describe('BalanceCalculator', () => {
   it('should return an empty array if there are no users', () => {
-    const given: UserTmp[] = []
+    const given: User[] = []
     const balances = new BalanceCalculator(given)
     const expenses = []
-    const actual = balances.Calculate(expenses)
+    const actual = balances.GetBalance(expenses)
 
     expect(actual).toEqual([])
   })
 
   it('should return an starting 0 balance', () => {
-    const given: UserTmp[] = [...dummyUsers]
+    const given: User[] = [...dummyUsers]
     const balances = new BalanceCalculator(given)
     const expenses = []
-    const actual = balances.Calculate(expenses)
+    const actual = balances.GetBalance(expenses)
 
     expect(actual).toEqual([
       { id: '1', name: 'Alejandro', balance: 0 },
@@ -26,10 +26,10 @@ describe('BalanceCalculator', () => {
   })
 
   it('should return two users with 0 balance', () => {
-    const given: UserTmp[] = dummyUsers.slice(0, 2)
+    const given: User[] = dummyUsers.slice(0, 2)
     const balances = new BalanceCalculator(given)
     const expenses = dummyExpenses.slice(1, 3)
-    const actual = balances.Calculate(expenses)
+    const actual = balances.GetBalance(expenses)
 
     expect(actual).toEqual([
       { id: '1', name: 'Alejandro', balance: 0 },
@@ -38,10 +38,10 @@ describe('BalanceCalculator', () => {
   })
 
   it('should return different balance for each 3 users', () => {
-    const given: UserTmp[] = [...dummyUsers]
+    const given: User[] = [...dummyUsers]
     const balances = new BalanceCalculator(given)
     const expenses = dummyExpenses.slice(1, 4)
-    const actual = balances.Calculate(expenses)
+    const actual = balances.GetBalance(expenses)
 
     expect(actual).toEqual([
       { id: '1', name: 'Alejandro', balance: 50 },
@@ -51,10 +51,10 @@ describe('BalanceCalculator', () => {
   })
 })
 
-const dummyUsers: UserTmp[] = [
-  new UserTmp('Alejandro', '', '1'),
-  new UserTmp('Marta', '', '2'),
-  new UserTmp('Pedro', '', '3'),
+const dummyUsers: User[] = [
+  new User('Alejandro', '', '1'),
+  new User('Marta', '', '2'),
+  new User('Pedro', '', '3'),
 ]
 
 const dummyExpenses: Expense[] = [

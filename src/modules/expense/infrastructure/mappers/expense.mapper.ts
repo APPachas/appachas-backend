@@ -8,12 +8,12 @@ export default class ExpenseMapper {
       return Optional.empty<Expense>()
     }
     const expense = new Expense(
-      expenseEntity.id,
       expenseEntity.price,
       expenseEntity.description,
       expenseEntity.paymentDate,
       expenseEntity.user,
       expenseEntity.group,
+      expenseEntity.id,
     )
     return Optional.of(expense)
   }
