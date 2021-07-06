@@ -1,47 +1,55 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common'
 import { Response } from 'express'
-import { UserService } from '../services/user.service'
-import { UserDocument } from '../schemas/user.schema'
-import { ICreateUserDto } from '../dto/create-user.dto'
-import { IUpdateUserDto } from '../dto/update-user.dto'
+import { UserBodyDto } from './userBody.dto'
+import UserFactory from '../../application/factory/user.factory'
+import CreateUserUseCase from '../../application/createUser.useCase'
+import FindUserUseCase from '../../application/findUser.useCase'
+import FindAllUsersUseCase from '../../application/findAllUsers.useCase'
+import UpdateUserUseCase from '../../application/updateUser.useCase'
+import DeleteUserUseCase from '../../application/deleteUser.useCase'
 
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userFactory: UserFactory,
+    private createUserUseCase: CreateUserUseCase,
+    private findUserUseCase: FindUserUseCase,
+    private findAllUsersUseCase: FindAllUsersUseCase,
+    private updateUserUseCase: UpdateUserUseCase,
+    private deleteUserUseCase: DeleteUserUseCase,
+  ) {}
 
   @Post()
-  async create(@Res() res: Response, @Body() createUserDto: ICreateUserDto) {
-    const user: UserDocument = await this.userService.create(createUserDto)
-    return res.status(HttpStatus.CREATED).json(user)
+  async createUser(@Res() res: Response, @Body() userBody: UserBodyDto) {
+    const user = this.userFactory.createUser(userBody)
+    const userCreated = await this.createUserUseCase.handler(user)
+    return res.status(HttpStatus.CREATED).json(userCreated)
   }
 
   @Get()
-  async findAll(@Res() res: Response) {
-    const users = await this.userService.findAll()
+  async findAllUsers(@Res() res: Response) {
+    const users = await this.findAllUsersUseCase.handler()
     return res.status(HttpStatus.OK).json(users)
   }
 
   @Get(':id')
-  async findOne(@Res() res: Response, @Param('id') id: string) {
-    const user = await this.userService.findOne(id)
+  async findUser(@Res() res: Response, @Param('id') id: string) {
+    const user = await this.findUserUseCase.handler(id)
     if (user === null) return res.status(HttpStatus.NOT_FOUND).send()
     return res.status(HttpStatus.OK).json(user)
   }
 
   @Put(':id')
-  async update(
-    @Res() res: Response,
-    @Param('id') id: string,
-    @Body() updateUserDto: IUpdateUserDto,
-  ) {
-    const user = await this.userService.update(id, updateUserDto)
-    if (user === null) return res.status(HttpStatus.NOT_FOUND).send()
-    return res.status(HttpStatus.OK).json(user)
+  async updateUser(@Res() res: Response, @Param('id') id: string, @Body() userBody: UserBodyDto) {
+    const user = this.userFactory.createUser(userBody)
+    const userUpdated = await this.updateUserUseCase.handler(id, user)
+    if (userUpdated === null) return res.status(HttpStatus.NOT_FOUND).send()
+    return res.status(HttpStatus.OK).json(userUpdated)
   }
 
   @Delete(':id')
-  async delete(@Res() res: Response, @Param('id') id: string) {
-    const user = await this.userService.delete(id)
+  async deleteUser(@Res() res: Response, @Param('id') id: string) {
+    const user = await this.deleteUserUseCase.handler(id)
     if (user === null) return res.status(HttpStatus.NOT_FOUND).send()
     return res.status(HttpStatus.OK).json(user)
   }

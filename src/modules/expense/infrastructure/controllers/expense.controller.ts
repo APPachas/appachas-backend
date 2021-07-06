@@ -1,8 +1,8 @@
 import { Body, Controller, Get, HttpStatus, Post, Query, Res } from '@nestjs/common'
-import CreateExpenseUseCase from '../../application/createExpense.usecase'
+import CreateExpenseUseCase from '../../application/createExpense.useCase'
 import { ExpenseResponseDto } from './expenseResponse.dto'
 import { GroupID } from '../../../../core/types'
-import FindExpensesByGroupUseCase from '../../application/findExpensesByGroup.usecase'
+import FindExpensesByGroupUseCase from '../../application/findExpensesByGroup.useCase'
 import ExpenseFactory from '../../application/factory/expense.factory'
 import { ExpenseBodyDto } from './expenseBody.dto'
 
