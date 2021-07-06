@@ -8,6 +8,6 @@ export default class CreateUserUseCase {
   constructor(@Inject(USER_REPOSITORY) private userRepository: UserRepository) {}
 
   public handler(user: User): Promise<User> {
-    return this.userRepository.createUser(user)
+    return this.userRepository.create(user)
   }
 }

@@ -5,33 +5,34 @@ import { UserDto } from './schemas/user.schema'
 import { UserRepository } from '../../domain/ports/user.repository'
 import User from '../../domain/users'
 import UserMapper from '../mappers/user.mapper'
+import { UserID } from '../../../../core/types'
 
 @Injectable()
 export default class UserRepositoryMongo implements UserRepository {
   constructor(@InjectModel('User') private readonly userModel: Model<UserDto>) {}
 
-  async createUser(user: User): Promise<User> {
+  async create(user: User): Promise<User> {
     let userCreated = new this.userModel(user)
     userCreated = await userCreated.save()
     return UserMapper.toDomain(userCreated)
   }
 
-  async findAllUsers(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     const users = await this.userModel.find().exec()
     return UserMapper.toDomains(users)
   }
 
-  async findUser(id: string): Promise<User | null> {
+  async findOne(id: UserID): Promise<User | null> {
     const user = await this.userModel.findById(id).exec()
     return user !== null ? UserMapper.toDomain(user) : null
   }
 
-  async updateUser(id: string, user: User): Promise<User | null> {
+  async update(id: UserID, user: User): Promise<User | null> {
     const userUpdated = await this.userModel.findByIdAndUpdate(id, user, { new: true }).exec()
     return userUpdated !== null ? UserMapper.toDomain(userUpdated) : null
   }
 
-  async deleteUser(id: string): Promise<User | null> {
+  async delete(id: UserID): Promise<User | null> {
     const userDeleted = await this.userModel.findByIdAndDelete(id).exec()
     return userDeleted !== null ? UserMapper.toDomain(userDeleted) : null
   }

@@ -7,6 +7,7 @@ import FindUserUseCase from '../../application/findUser.useCase'
 import FindAllUsersUseCase from '../../application/findAllUsers.useCase'
 import UpdateUserUseCase from '../../application/updateUser.useCase'
 import DeleteUserUseCase from '../../application/deleteUser.useCase'
+import { UserID } from '../../../../core/types'
 
 @Controller('users')
 export class UserController {
@@ -20,35 +21,35 @@ export class UserController {
   ) {}
 
   @Post()
-  async createUser(@Res() res: Response, @Body() userBody: UserBodyDto) {
-    const user = this.userFactory.createUser(userBody)
+  async create(@Res() res: Response, @Body() userBody: UserBodyDto) {
+    const user = this.userFactory.create(userBody)
     const userCreated = await this.createUserUseCase.handler(user)
     return res.status(HttpStatus.CREATED).json(userCreated)
   }
 
   @Get()
-  async findAllUsers(@Res() res: Response) {
+  async findAll(@Res() res: Response) {
     const users = await this.findAllUsersUseCase.handler()
     return res.status(HttpStatus.OK).json(users)
   }
 
   @Get(':id')
-  async findUser(@Res() res: Response, @Param('id') id: string) {
+  async findOne(@Res() res: Response, @Param('id') id: UserID) {
     const user = await this.findUserUseCase.handler(id)
     if (user === null) return res.status(HttpStatus.NOT_FOUND).send()
     return res.status(HttpStatus.OK).json(user)
   }
 
   @Put(':id')
-  async updateUser(@Res() res: Response, @Param('id') id: string, @Body() userBody: UserBodyDto) {
-    const user = this.userFactory.createUser(userBody)
+  async update(@Res() res: Response, @Param('id') id: UserID, @Body() userBody: UserBodyDto) {
+    const user = this.userFactory.create(userBody)
     const userUpdated = await this.updateUserUseCase.handler(id, user)
     if (userUpdated === null) return res.status(HttpStatus.NOT_FOUND).send()
     return res.status(HttpStatus.OK).json(userUpdated)
   }
 
   @Delete(':id')
-  async deleteUser(@Res() res: Response, @Param('id') id: string) {
+  async delete(@Res() res: Response, @Param('id') id: UserID) {
     const user = await this.deleteUserUseCase.handler(id)
     if (user === null) return res.status(HttpStatus.NOT_FOUND).send()
     return res.status(HttpStatus.OK).json(user)

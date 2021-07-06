@@ -2,13 +2,13 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
 import * as mongoose from 'mongoose'
 
-export type GroupDocument = Group & Document
+export type GroupDto = Group & Document
 
 @Schema({
   timestamps: true,
   versionKey: false,
 })
-export class Group {
+class Group {
   @Prop({ required: true })
   name: string
 

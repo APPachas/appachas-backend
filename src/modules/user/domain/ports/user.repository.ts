@@ -2,9 +2,9 @@ import { UserID } from '../../../../core/types'
 import User from '../users'
 
 export interface UserRepository {
-  createUser(user: User): Promise<User>
-  findAllUsers(): Promise<User[]>
-  findUser(id: UserID): Promise<User>
-  updateUser(id: string, user: User): Promise<User>
-  deleteUser(id: UserID): Promise<User>
+  create(user: User): Promise<User>
+  findAll(): Promise<User[]>
+  findOne(id: UserID): Promise<User>
+  update(id: UserID, user: User): Promise<User>
+  delete(id: UserID): Promise<User>
 }

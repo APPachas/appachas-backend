@@ -8,6 +8,6 @@ export default class DeleteUserUseCase {
   constructor(@Inject(USER_REPOSITORY) private userRepository: UserRepository) {}
 
   public handler(id: UserID): Promise<User> {
-    return this.userRepository.deleteUser(id)
+    return this.userRepository.delete(id)
   }
 }

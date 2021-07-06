@@ -8,6 +8,6 @@ export default class FindUserUseCase {
   constructor(@Inject(USER_REPOSITORY) private userRepository: UserRepository) {}
 
   public handler(id: UserID): Promise<User> {
-    return this.userRepository.findUser(id)
+    return this.userRepository.findOne(id)
   }
 }
