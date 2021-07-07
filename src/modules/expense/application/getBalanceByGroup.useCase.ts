@@ -9,7 +9,7 @@ export default class GetBalanceByGroupUseCase {
   constructor(@Inject(EXPENSE_REPOSITORY) private expenseRepository: ExpenseRepository) {}
 
   public async handler(id: GroupID, users: User[]): Promise<UserBalance[]> {
-    const expenses = await this.expenseRepository.findExpenseByGroup(id)
+    const expenses = await this.expenseRepository.findByGroup(id)
     const balance = new BalanceCalculator(users)
     return balance.GetBalance(expenses)
   }

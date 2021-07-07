@@ -1,8 +1,9 @@
-import { Optional } from 'typescript-optional'
 import Expense from '../expense'
-import { GroupID } from '../../../../core/types'
+import { ExpenseID, GroupID } from '../../../../core/types'
 
 export interface ExpenseRepository {
-  createExpense(product: Expense): Promise<Optional<Expense>>
-  findExpenseByGroup(groupID: GroupID): Promise<Expense[]>
+  create(expense: Expense): Promise<Expense>
+  findByGroup(groupID: GroupID): Promise<Expense[]>
+  update(id: ExpenseID, expense: Expense): Promise<Expense>
+  delete(id: ExpenseID): Promise<Expense>
 }

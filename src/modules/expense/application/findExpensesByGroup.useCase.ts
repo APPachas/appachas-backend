@@ -8,6 +8,6 @@ export default class FindExpensesByGroupUseCase {
   constructor(@Inject(EXPENSE_REPOSITORY) private expenseRepository: ExpenseRepository) {}
 
   public handler(groupID: GroupID): Promise<Expense[]> {
-    return this.expenseRepository.findExpenseByGroup(groupID)
+    return this.expenseRepository.findByGroup(groupID)
   }
 }

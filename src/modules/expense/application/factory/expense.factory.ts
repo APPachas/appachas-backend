@@ -4,7 +4,7 @@ import { ExpenseBodyDto } from '../../infrastructure/controllers/expenseBody.dto
 
 @Injectable()
 export default class ExpenseFactory {
-  public createExpense(expense: ExpenseBodyDto): Expense {
+  public create(expense: ExpenseBodyDto): Expense {
     return new Expense(
       expense.price,
       expense.description,

@@ -40,15 +40,11 @@ export class UserController {
     return res.status(HttpStatus.CREATED).json(userCreated)
   }
 
-  @Get('/group')
-  async findAllByGroup(@Res() res: Response, @Query('id') id: GroupID) {
-    const users = await this.findAllUsersByGroupUseCase.handler(id)
-    return res.status(HttpStatus.OK).json(users)
-  }
-
   @Get()
-  async findAll(@Res() res: Response) {
-    const users = await this.findAllUsersUseCase.handler()
+  async findAll(@Res() res: Response, @Query('group') group: GroupID) {
+    const users = group
+      ? await this.findAllUsersByGroupUseCase.handler(group)
+      : await this.findAllUsersUseCase.handler()
     return res.status(HttpStatus.OK).json(users)
   }
 

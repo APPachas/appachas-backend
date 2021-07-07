@@ -8,6 +8,8 @@ import ExpenseRepositoryMongo from '../infrastructure/repository/expense.reposit
 import { EXPENSE_REPOSITORY } from '../../../core/types'
 import FindExpensesByGroupUseCase from './findExpensesByGroup.useCase'
 import GetBalanceByGroupUseCase from './getBalanceByGroup.useCase'
+import UpdateExpenseUseCase from './updateExpense.useCase'
+import DeleteExpenseUseCase from './deleteExpense.useCase'
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import GetBalanceByGroupUseCase from './getBalanceByGroup.useCase'
     CreateExpenseUseCase,
     FindExpensesByGroupUseCase,
     GetBalanceByGroupUseCase,
+    UpdateExpenseUseCase,
+    DeleteExpenseUseCase,
     {
       provide: EXPENSE_REPOSITORY,
       useClass: ExpenseRepositoryMongo,
@@ -34,6 +38,8 @@ import GetBalanceByGroupUseCase from './getBalanceByGroup.useCase'
     CreateExpenseUseCase,
     FindExpensesByGroupUseCase,
     GetBalanceByGroupUseCase,
+    UpdateExpenseUseCase,
+    DeleteExpenseUseCase,
   ],
 })
 export class ExpenseApplicationModule {}
