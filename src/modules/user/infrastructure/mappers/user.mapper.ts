@@ -3,7 +3,13 @@ import User from '../../domain/users'
 
 export default class UserMapper {
   public static toDomain(userEntity: UserDto): User {
-    return new User(userEntity.name, userEntity.email, userEntity.password, userEntity.id)
+    return new User(
+      userEntity.name,
+      userEntity.email,
+      userEntity.password,
+      userEntity.groups,
+      userEntity.id,
+    )
   }
 
   static toDomains(usersEntity: UserDto[]): User[] {

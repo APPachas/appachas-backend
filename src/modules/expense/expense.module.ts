@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common'
-import { DomainModule } from './domain/domain.module'
-import { InfrastructureModule } from './infrastructure/infrastructure.module'
-import { ApplicationModule } from './application/application.module'
+import { ExpenseDomainModule } from './domain/expenseDomain.module'
+import { ExpenseInfrastructureModule } from './infrastructure/expenseInfrastructure.module'
+import { ExpenseApplicationModule } from './application/expenseApplication.module'
 
 @Module({
-  imports: [DomainModule, InfrastructureModule, ApplicationModule],
+  imports: [ExpenseDomainModule, ExpenseInfrastructureModule, ExpenseApplicationModule],
 })
 export class ExpenseModule {}

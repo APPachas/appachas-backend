@@ -1,4 +1,4 @@
-import { UserID } from '../../../core/types'
+import { GroupID, UserID } from '../../../core/types'
 import InvalidEmailException from './exceptions/invalid-email.exception'
 import InvalidPasswordLengthException from './exceptions/invalid-password-length.exception'
 
@@ -7,6 +7,7 @@ export default class User {
     readonly name: string,
     readonly email: string,
     readonly password: string,
+    readonly groups?: GroupID[],
     readonly id?: UserID,
   ) {
     this.validateEmail(email)

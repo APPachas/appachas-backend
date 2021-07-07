@@ -5,6 +5,8 @@ import { GroupID } from '../../../../core/types'
 import FindExpensesByGroupUseCase from '../../application/findExpensesByGroup.useCase'
 import ExpenseFactory from '../../application/factory/expense.factory'
 import { ExpenseBodyDto } from './expenseBody.dto'
+import GetBalanceByGroupUseCase from '../../application/getBalanceByGroup.useCase'
+import FindAllUsersByGroupUseCase from '../../../user/application/findAllUsersByGroup.useCase'
 
 @Controller('expenses')
 export default class ExpenseController {
@@ -12,6 +14,8 @@ export default class ExpenseController {
     private expenseFactory: ExpenseFactory,
     private readonly createExpenseUseCase: CreateExpenseUseCase,
     private readonly findExpenseByGroupUseCase: FindExpensesByGroupUseCase,
+    private readonly getBalanceByGroupUseCase: GetBalanceByGroupUseCase,
+    private readonly findAllUsersByGroupUseCase: FindAllUsersByGroupUseCase,
   ) {}
 
   @Post()
@@ -28,5 +32,12 @@ export default class ExpenseController {
   async findExpensesByGroup(@Res() request, @Query('group') groupID: GroupID) {
     const expenses = await this.findExpenseByGroupUseCase.handler(groupID)
     return request.status(HttpStatus.OK).json(expenses)
+  }
+
+  @Get('/balance')
+  async getBalanceByGroup(@Res() request, @Query('group') id: GroupID) {
+    const users = await this.findAllUsersByGroupUseCase.handler(id)
+    const balance = await this.getBalanceByGroupUseCase.handler(id, users)
+    return request.status(HttpStatus.OK).json(balance)
   }
 }

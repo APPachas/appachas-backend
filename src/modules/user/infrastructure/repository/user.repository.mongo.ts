@@ -5,7 +5,7 @@ import { UserDto } from './schemas/user.schema'
 import { UserRepository } from '../../domain/ports/user.repository'
 import User from '../../domain/users'
 import UserMapper from '../mappers/user.mapper'
-import { UserID } from '../../../../core/types'
+import { GroupID, UserID } from '../../../../core/types'
 
 @Injectable()
 export default class UserRepositoryMongo implements UserRepository {
@@ -19,6 +19,11 @@ export default class UserRepositoryMongo implements UserRepository {
 
   async findAll(): Promise<User[]> {
     const users = await this.userModel.find().exec()
+    return UserMapper.toDomains(users)
+  }
+
+  async findAllByGroup(id: GroupID): Promise<User[]> {
+    const users = await this.userModel.find({ groups: id }).exec()
     return UserMapper.toDomains(users)
   }
 

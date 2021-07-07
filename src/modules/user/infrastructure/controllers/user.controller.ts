@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  Res,
+} from '@nestjs/common'
 import { Response } from 'express'
 import { UserBodyDto } from './userBody.dto'
 import UserFactory from '../../application/factory/user.factory'
@@ -7,7 +18,8 @@ import FindUserUseCase from '../../application/findUser.useCase'
 import FindAllUsersUseCase from '../../application/findAllUsers.useCase'
 import UpdateUserUseCase from '../../application/updateUser.useCase'
 import DeleteUserUseCase from '../../application/deleteUser.useCase'
-import { UserID } from '../../../../core/types'
+import { GroupID, UserID } from '../../../../core/types'
+import FindAllUsersByGroupUseCase from '../../application/findAllUsersByGroup.useCase'
 
 @Controller('users')
 export class UserController {
@@ -18,6 +30,7 @@ export class UserController {
     private findAllUsersUseCase: FindAllUsersUseCase,
     private updateUserUseCase: UpdateUserUseCase,
     private deleteUserUseCase: DeleteUserUseCase,
+    private findAllUsersByGroupUseCase: FindAllUsersByGroupUseCase,
   ) {}
 
   @Post()
@@ -25,6 +38,12 @@ export class UserController {
     const user = this.userFactory.create(userBody)
     const userCreated = await this.createUserUseCase.handler(user)
     return res.status(HttpStatus.CREATED).json(userCreated)
+  }
+
+  @Get('/group')
+  async findAllByGroup(@Res() res: Response, @Query('id') id: GroupID) {
+    const users = await this.findAllUsersByGroupUseCase.handler(id)
+    return res.status(HttpStatus.OK).json(users)
   }
 
   @Get()

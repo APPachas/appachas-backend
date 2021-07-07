@@ -1,7 +1,7 @@
 import User from '../../user/domain/users'
 import Expense from './expense'
 
-class UserBalance {
+export class UserBalance {
   constructor(public readonly id, public readonly name, public balance) {}
 }
 
