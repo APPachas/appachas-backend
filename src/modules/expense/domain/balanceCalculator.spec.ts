@@ -52,9 +52,9 @@ describe('BalanceCalculator', () => {
 })
 
 const dummyUsers: User[] = [
-  new User('Alejandro', '', '1'),
-  new User('Marta', '', '2'),
-  new User('Pedro', '', '3'),
+  new User('Alejandro', 'asd@asd.com', '12345678', [], '1'),
+  new User('Marta', 'asd@asd.com', '12345678', [], '2'),
+  new User('Pedro', 'asd@asd.com', '12345678', [], '3'),
 ]
 
 const dummyExpenses: Expense[] = [

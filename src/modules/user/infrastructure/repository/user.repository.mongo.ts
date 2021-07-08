@@ -6,7 +6,6 @@ import { UserRepository } from '../../domain/ports/user.repository'
 import User from '../../domain/users'
 import UserMapper from '../mappers/user.mapper'
 import { GroupID, UserID } from '../../../../core/types'
-import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export default class UserRepositoryMongo implements UserRepository {
@@ -14,11 +13,7 @@ export default class UserRepositoryMongo implements UserRepository {
 
   async create(user: User): Promise<User> {
     let userCreated = new this.userModel(user)
-    const saltOrRounds = 10
-    userCreated.password = await bcrypt.hash(userCreated.password, saltOrRounds)
     userCreated = await userCreated.save()
-    userCreated.password =
-      'There is no curse in Elvish, Entish, or the tongues of Men for this treachery.'
     return UserMapper.toDomain(userCreated)
   }
 
