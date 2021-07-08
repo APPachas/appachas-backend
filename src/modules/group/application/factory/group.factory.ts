@@ -5,6 +5,6 @@ import { GroupBodyDto } from '../../infrastructure/controllers/groupBody.dto'
 @Injectable()
 export default class GroupFactory {
   public create(group: GroupBodyDto): Group {
-    return new Group(group.name, group.users)
+    return new Group(group.name, group.isClosed)
   }
 }
