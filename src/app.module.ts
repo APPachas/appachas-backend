@@ -3,6 +3,7 @@ import { UserModule } from './modules/user/user.module'
 import { MongooseModule } from '@nestjs/mongoose'
 import { GroupModule } from './modules/group/group.module'
 import { ExpenseModule } from './modules/expense/expense.module'
+import { AuthModule } from './modules/auth/auth.module'
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { ExpenseModule } from './modules/expense/expense.module'
     UserModule,
     GroupModule,
     ExpenseModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

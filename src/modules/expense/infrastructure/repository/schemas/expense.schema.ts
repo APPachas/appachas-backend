@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
 import { GroupID, UserID } from '../../../../../core/types'
+import * as mongoose from 'mongoose'
 
 export type ExpenseDto = Expense & Document
 
@@ -18,10 +19,10 @@ class Expense {
   @Prop({ required: true })
   paymentDate: Date
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: UserID
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'Group' })
   group: GroupID
 }
 
