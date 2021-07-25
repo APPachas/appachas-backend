@@ -20,7 +20,7 @@ import UpdateGroupUseCase from '../../application/updateGroup.useCase'
 import DeleteGroupUseCase from '../../application/deleteGroup.useCase'
 import { GroupBodyDto } from './groupBody.dto'
 import { GroupID } from '../../../../core/types'
-import { JwtAuthGuard } from '../../../auth/infrastructure/jwt-auth.guard'
+import { JwtAuthGuard } from '../../../auth/infrastructure/guards/jwt-auth.guard'
 
 @Controller('groups')
 export class GroupController {
@@ -37,6 +37,7 @@ export class GroupController {
   @Post()
   async create(@Res() res: Response, @Req() req: any, @Body() groupBody: GroupBodyDto) {
     const userId = req.user.id
+    console.log(req.user)
     const group = this.groupFactory.create(groupBody, userId)
     const groupCreated = await this.createGroupUseCase.handler(group)
     return res.status(HttpStatus.CREATED).json(groupCreated)
@@ -45,7 +46,9 @@ export class GroupController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Res() res: Response, @Req() req: any) {
+    console.log(req)
     const userId = req.user.id
+    console.log(userId)
     const groups = await this.findAllGroupsUseCase.handler(userId)
     return res.status(HttpStatus.OK).json(groups)
   }

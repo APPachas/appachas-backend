@@ -22,7 +22,7 @@ import FindAllUsersByGroupUseCase from '../../../user/application/findAllUsersBy
 import { Response } from 'express'
 import UpdateExpenseUseCase from '../../application/updateExpense.useCase'
 import DeleteExpenseUseCase from '../../application/deleteExpense.useCase'
-import { JwtAuthGuard } from '../../../auth/infrastructure/jwt-auth.guard'
+import { JwtAuthGuard } from '../../../auth/infrastructure/guards/jwt-auth.guard'
 
 @Controller('expenses')
 export default class ExpenseController {
