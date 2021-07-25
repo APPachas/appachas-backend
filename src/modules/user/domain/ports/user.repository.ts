@@ -6,6 +6,7 @@ export interface UserRepository {
   findAll(): Promise<User[]>
   findAllByGroup(id: GroupID): Promise<User[]>
   findOne(id: UserID): Promise<User>
+  findOneByEmail(email: string): Promise<User>
   update(id: UserID, user: User): Promise<User>
   delete(id: UserID): Promise<User>
 }

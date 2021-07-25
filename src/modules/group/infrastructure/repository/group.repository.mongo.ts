@@ -5,7 +5,7 @@ import { GroupRepository } from '../../domain/ports/group.repository'
 import { GroupDto } from './schemas/group.schema'
 import Group from '../../domain/group'
 import GroupMapper from '../mappers/group.mapper'
-import { GroupID } from '../../../../core/types'
+import { GroupID, UserID } from '../../../../core/types'
 
 @Injectable()
 export default class GroupRepositoryMongo implements GroupRepository {
@@ -17,8 +17,8 @@ export default class GroupRepositoryMongo implements GroupRepository {
     return GroupMapper.toDomain(groupCreated)
   }
 
-  async findAll(): Promise<Group[]> {
-    const groups = await this.groupModel.find().exec()
+  async findAll(userId: UserID): Promise<Group[]> {
+    const groups = await this.groupModel.find({ users: userId }).exec()
     return GroupMapper.toDomains(groups)
   }
 

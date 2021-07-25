@@ -1,5 +1,10 @@
-import { GroupID } from '../../../core/types'
+import { GroupID, UserID } from '../../../core/types'
 
 export default class Group {
-  constructor(readonly name: string, readonly isClosed: boolean = false, readonly id?: GroupID) {}
+  constructor(
+    readonly name: string,
+    readonly isClosed: boolean = false,
+    readonly users: UserID[],
+    readonly id?: GroupID,
+  ) {}
 }

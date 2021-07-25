@@ -32,6 +32,11 @@ export default class UserRepositoryMongo implements UserRepository {
     return user !== null ? UserMapper.toDomain(user) : null
   }
 
+  async findOneByEmail(email: string): Promise<User | null> {
+    const user = await this.userModel.findOne({ email: email }).exec()
+    return user !== null ? UserMapper.toDomain(user) : null
+  }
+
   async update(id: UserID, user: User): Promise<User | null> {
     const userUpdated = await this.userModel.findByIdAndUpdate(id, user, { new: true }).exec()
     return userUpdated !== null ? UserMapper.toDomain(userUpdated) : null

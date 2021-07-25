@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { UserSchema } from './infrastructure/repository/schemas/user.schema'
-import { UserController } from './infrastructure/controllers/user.controller'
 import { UserDomainModule } from './domain/userDomain.module'
 import { UserApplicationModule } from './application/userApplication.module'
 import { UserInfrastructureModule } from './infrastructure/userInfrastructure.module'
@@ -13,8 +12,6 @@ import { UserInfrastructureModule } from './infrastructure/userInfrastructure.mo
     UserApplicationModule,
     UserInfrastructureModule,
   ],
-  controllers: [UserController],
-  providers: [],
   exports: [UserApplicationModule],
 })
 export class UserModule {}

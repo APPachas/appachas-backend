@@ -9,6 +9,7 @@ import {
   Put,
   Query,
   Res,
+  UseGuards,
 } from '@nestjs/common'
 import CreateExpenseUseCase from '../../application/createExpense.useCase'
 import { ExpenseResponseDto } from './expenseResponse.dto'
@@ -21,6 +22,7 @@ import FindAllUsersByGroupUseCase from '../../../user/application/findAllUsersBy
 import { Response } from 'express'
 import UpdateExpenseUseCase from '../../application/updateExpense.useCase'
 import DeleteExpenseUseCase from '../../application/deleteExpense.useCase'
+import { JwtAuthGuard } from '../../../auth/infrastructure/jwt-auth.guard'
 
 @Controller('expenses')
 export default class ExpenseController {
@@ -34,22 +36,25 @@ export default class ExpenseController {
     private readonly deleteExpenseUseCase: DeleteExpenseUseCase,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async createExpense(
-    @Res() request,
+    @Res() response,
     @Body() expenseBody: ExpenseBodyDto,
   ): Promise<ExpenseResponseDto> {
     const expense = this.expenseFactory.create(expenseBody)
     const expenseCreated = await this.createExpenseUseCase.handler(expense)
-    return request.status(HttpStatus.CREATED).json(expenseCreated)
+    return response.status(HttpStatus.CREATED).json(expenseCreated)
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('')
-  async findExpensesByGroup(@Res() request, @Query('group') groupID: GroupID) {
+  async findExpensesByGroup(@Res() response, @Query('group') groupID: GroupID) {
     const expenses = await this.findExpenseByGroupUseCase.handler(groupID)
-    return request.status(HttpStatus.OK).json(expenses)
+    return response.status(HttpStatus.OK).json(expenses)
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/balance')
   async getBalanceByGroup(@Res() request, @Query('group') id: GroupID) {
     const users = await this.findAllUsersByGroupUseCase.handler(id)
@@ -57,6 +62,7 @@ export default class ExpenseController {
     return request.status(HttpStatus.OK).json(balance)
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
     @Res() res: Response,
@@ -69,6 +75,7 @@ export default class ExpenseController {
     return res.status(HttpStatus.OK).json(expenseUpdated)
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(@Res() res: Response, @Param('id') id: ExpenseID) {
     const expense = await this.deleteExpenseUseCase.handler(id)

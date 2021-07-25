@@ -3,7 +3,7 @@ import { GroupDto } from '../repository/schemas/group.schema'
 
 export default class GroupMapper {
   public static toDomain(groupEntity: GroupDto): Group {
-    return new Group(groupEntity.name, groupEntity.isClosed, groupEntity.id)
+    return new Group(groupEntity.name, groupEntity.isClosed, groupEntity.users, groupEntity.id)
   }
 
   static toDomains(groupsEntity: GroupDto[]): Group[] {

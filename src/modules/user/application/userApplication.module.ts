@@ -11,6 +11,7 @@ import DeleteUserUseCase from './deleteUser.useCase'
 import { USER_REPOSITORY } from '../../../core/types'
 import UserRepositoryMongo from '../infrastructure/repository/user.repository.mongo'
 import FindAllUsersByGroupUseCase from './findAllUsersByGroup.useCase'
+import FindUserByEmailUseCase from './findUserByEmail.useCase'
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import FindAllUsersByGroupUseCase from './findAllUsersByGroup.useCase'
     UserFactory,
     CreateUserUseCase,
     FindUserUseCase,
+    FindUserByEmailUseCase,
     FindAllUsersUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase,
@@ -39,6 +41,7 @@ import FindAllUsersByGroupUseCase from './findAllUsersByGroup.useCase'
     UserFactory,
     CreateUserUseCase,
     FindUserUseCase,
+    FindUserByEmailUseCase,
     FindAllUsersUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase,

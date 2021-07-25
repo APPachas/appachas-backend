@@ -7,7 +7,7 @@ import Group from '../domain/group'
 export default class FindAllGroupsUseCase {
   constructor(@Inject(GROUP_REPOSITORY) private groupRepository: GroupRepository) {}
 
-  public handler(): Promise<Group[]> {
-    return this.groupRepository.findAll()
+  public handler(userId): Promise<Group[]> {
+    return this.groupRepository.findAll(userId)
   }
 }
