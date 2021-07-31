@@ -11,7 +11,9 @@ import { AuthModule } from './modules/auth/auth.module'
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot('mongodb://localhost:27017'),
+    MongooseModule.forRoot(
+      'mongodb+srv://appachas:tfmcice21@cluster0.pt6f2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+    ),
     UserModule,
     GroupModule,
     ExpenseModule,

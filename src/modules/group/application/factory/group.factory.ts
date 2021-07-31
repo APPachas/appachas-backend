@@ -7,7 +7,11 @@ import { UserID } from '../../../../core/types'
 export default class GroupFactory {
   public create(group: GroupBodyDto, userId?: UserID): Group {
     if (userId) {
-      group.users = group.users.indexOf(userId) === -1 ? [...group.users, userId] : group.users
+      if (group.users !== undefined) {
+        group.users = group.users.indexOf(userId) === -1 ? [...group.users, userId] : group.users
+      } else {
+        group.users = [userId]
+      }
     }
     return new Group(group.name, group.isClosed, group.users)
   }

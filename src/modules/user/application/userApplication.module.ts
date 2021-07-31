@@ -10,7 +10,7 @@ import UpdateUserUseCase from './updateUser.useCase'
 import DeleteUserUseCase from './deleteUser.useCase'
 import { USER_REPOSITORY } from '../../../core/types'
 import UserRepositoryMongo from '../infrastructure/repository/user.repository.mongo'
-import FindAllUsersByGroupUseCase from './findAllUsersByGroup.useCase'
+import FindAllUsersByIdUseCase from './findAllUsersByIdUseCase'
 import FindUserByEmailUseCase from './findUserByEmail.useCase'
 
 @Module({
@@ -31,7 +31,7 @@ import FindUserByEmailUseCase from './findUserByEmail.useCase'
     FindAllUsersUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase,
-    FindAllUsersByGroupUseCase,
+    FindAllUsersByIdUseCase,
     {
       provide: USER_REPOSITORY,
       useClass: UserRepositoryMongo,
@@ -45,7 +45,7 @@ import FindUserByEmailUseCase from './findUserByEmail.useCase'
     FindAllUsersUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase,
-    FindAllUsersByGroupUseCase,
+    FindAllUsersByIdUseCase,
   ],
 })
 export class UserApplicationModule {}

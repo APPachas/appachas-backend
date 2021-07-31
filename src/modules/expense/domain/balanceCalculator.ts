@@ -2,7 +2,7 @@ import User from '../../user/domain/users'
 import Expense from './expense'
 
 export class UserBalance {
-  constructor(public readonly id, public readonly name, public balance) {}
+  constructor(public readonly id: string, public readonly name: string, public balance: number) {}
 }
 
 export class BalanceCalculator {
@@ -21,11 +21,11 @@ export class BalanceCalculator {
     const initialBalancePerUser = this.GetInitialBalancePerUser(expenses)
 
     this.userBalances.forEach(userBalance => {
-      userBalance.balance = expenses.reduce(
-        (total, currentExpense) =>
-          currentExpense.user === userBalance.id ? total + currentExpense.price : total,
-        initialBalancePerUser,
-      )
+      userBalance.balance = expenses.reduce((total, currentExpense: Expense) => {
+        return currentExpense.user.toString() === userBalance.id
+          ? total + currentExpense.price
+          : total
+      }, initialBalancePerUser)
     })
     return this.userBalances
   }
@@ -36,6 +36,7 @@ export class BalanceCalculator {
       (total, currentExpense) => total - currentExpense.price,
       initialBalance,
     )
+
     return totalExpenses / this.userBalances.length
   }
 

@@ -15,7 +15,9 @@ export default class AuthController {
   @Post()
   async signIn(@Res() response, @Body() signInBodyDto: SignInBodyDto) {
     const user = await this.findUserByEmailUseCase.handler(signInBodyDto.email)
+    console.log(user)
     const isValidPassword = await this.comparePasswordUseCase.handler(user, signInBodyDto.password)
+    console.log(isValidPassword)
     if (isValidPassword) {
       const cookie = this.authenticationService.getCookieWithJwtToken(user.id)
       response.setHeader('Set-Cookie', cookie)

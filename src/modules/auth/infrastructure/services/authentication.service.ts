@@ -9,6 +9,6 @@ export class AuthenticationService {
   public getCookieWithJwtToken(userId: UserID) {
     const payload: TokenPayload = { userId }
     const token = this.jwtService.sign(payload)
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=3600`
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=86400`
   }
 }

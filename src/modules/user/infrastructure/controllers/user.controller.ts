@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  Post,
-  Put,
-  Query,
-  Res,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { UserBodyDto } from './userBody.dto'
 import UserFactory from '../../application/factory/user.factory'
@@ -18,8 +7,7 @@ import FindUserUseCase from '../../application/findUser.useCase'
 import FindAllUsersUseCase from '../../application/findAllUsers.useCase'
 import UpdateUserUseCase from '../../application/updateUser.useCase'
 import DeleteUserUseCase from '../../application/deleteUser.useCase'
-import { GroupID, UserID } from '../../../../core/types'
-import FindAllUsersByGroupUseCase from '../../application/findAllUsersByGroup.useCase'
+import { UserID } from '../../../../core/types'
 
 @Controller('users')
 export class UserController {
@@ -30,7 +18,6 @@ export class UserController {
     private findAllUsersUseCase: FindAllUsersUseCase,
     private updateUserUseCase: UpdateUserUseCase,
     private deleteUserUseCase: DeleteUserUseCase,
-    private findAllUsersByGroupUseCase: FindAllUsersByGroupUseCase,
   ) {}
 
   @Post()
@@ -41,10 +28,8 @@ export class UserController {
   }
 
   @Get()
-  async findAll(@Res() res: Response, @Query('group') group: GroupID) {
-    const users = group
-      ? await this.findAllUsersByGroupUseCase.handler(group)
-      : await this.findAllUsersUseCase.handler()
+  async findAll(@Res() res: Response) {
+    const users = await this.findAllUsersUseCase.handler()
     return res.status(HttpStatus.OK).json(users)
   }
 

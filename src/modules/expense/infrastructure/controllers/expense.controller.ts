@@ -18,11 +18,12 @@ import FindExpensesByGroupUseCase from '../../application/findExpensesByGroup.us
 import ExpenseFactory from '../../application/factory/expense.factory'
 import { ExpenseBodyDto } from './expenseBody.dto'
 import GetBalanceByGroupUseCase from '../../application/getBalanceByGroup.useCase'
-import FindAllUsersByGroupUseCase from '../../../user/application/findAllUsersByGroup.useCase'
+import FindAllUsersByIdUseCase from '../../../user/application/findAllUsersByIdUseCase'
 import { Response } from 'express'
 import UpdateExpenseUseCase from '../../application/updateExpense.useCase'
 import DeleteExpenseUseCase from '../../application/deleteExpense.useCase'
 import { JwtAuthGuard } from '../../../auth/infrastructure/guards/jwt-auth.guard'
+import FindGroupUseCase from '../../../group/application/findGroup.useCase'
 
 @Controller('expenses')
 export default class ExpenseController {
@@ -31,9 +32,10 @@ export default class ExpenseController {
     private readonly createExpenseUseCase: CreateExpenseUseCase,
     private readonly findExpenseByGroupUseCase: FindExpensesByGroupUseCase,
     private readonly getBalanceByGroupUseCase: GetBalanceByGroupUseCase,
-    private readonly findAllUsersByGroupUseCase: FindAllUsersByGroupUseCase,
+    private readonly findAllUsersByIdUseCase: FindAllUsersByIdUseCase,
     private readonly updateExpenseUseCase: UpdateExpenseUseCase,
     private readonly deleteExpenseUseCase: DeleteExpenseUseCase,
+    private readonly findGroupUseCase: FindGroupUseCase,
   ) {}
 
   @UseGuards(JwtAuthGuard)
@@ -57,7 +59,8 @@ export default class ExpenseController {
   @UseGuards(JwtAuthGuard)
   @Get('/balance')
   async getBalanceByGroup(@Res() request, @Query('group') id: GroupID) {
-    const users = await this.findAllUsersByGroupUseCase.handler(id)
+    const group = await this.findGroupUseCase.handler(id)
+    const users = await this.findAllUsersByIdUseCase.handler([...group.users])
     const balance = await this.getBalanceByGroupUseCase.handler(id, users)
     return request.status(HttpStatus.OK).json(balance)
   }

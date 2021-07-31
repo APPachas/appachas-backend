@@ -15,12 +15,12 @@ import { Response } from 'express'
 import GroupFactory from '../../application/factory/group.factory'
 import CreateGroupUseCase from '../../application/createGroup.useCase'
 import FindGroupUseCase from '../../application/findGroup.useCase'
-import FindAllGroupsUseCase from '../../application/findAllGroups.useCase'
 import UpdateGroupUseCase from '../../application/updateGroup.useCase'
 import DeleteGroupUseCase from '../../application/deleteGroup.useCase'
 import { GroupBodyDto } from './groupBody.dto'
 import { GroupID } from '../../../../core/types'
 import { JwtAuthGuard } from '../../../auth/infrastructure/guards/jwt-auth.guard'
+import FindAllGroupsUseCase from '../../application/findAllGroups.useCase'
 
 @Controller('groups')
 export class GroupController {
@@ -37,7 +37,6 @@ export class GroupController {
   @Post()
   async create(@Res() res: Response, @Req() req: any, @Body() groupBody: GroupBodyDto) {
     const userId = req.user.id
-    console.log(req.user)
     const group = this.groupFactory.create(groupBody, userId)
     const groupCreated = await this.createGroupUseCase.handler(group)
     return res.status(HttpStatus.CREATED).json(groupCreated)
@@ -46,9 +45,7 @@ export class GroupController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Res() res: Response, @Req() req: any) {
-    console.log(req)
     const userId = req.user.id
-    console.log(userId)
     const groups = await this.findAllGroupsUseCase.handler(userId)
     return res.status(HttpStatus.OK).json(groups)
   }

@@ -49,6 +49,18 @@ describe('BalanceCalculator', () => {
       { id: '3', name: 'Pedro', balance: -100 },
     ])
   })
+
+  it('should return different balance for each 2 users', () => {
+    const given: User[] = dummyUsers.slice(0, 2)
+    const balances = new BalanceCalculator(given)
+    const expenses = [...dummySegondTest]
+    const actual = balances.GetBalance(expenses)
+
+    expect(actual).toEqual([
+      { id: '1', name: 'Alejandro', balance: 325 },
+      { id: '2', name: 'Marta', balance: -325 },
+    ])
+  })
 })
 
 const dummyUsers: User[] = [
@@ -62,4 +74,11 @@ const dummyExpenses: Expense[] = [
   new Expense(200, '', new Date(), '1', '1', '4'),
   new Expense(200, '', new Date(), '2', '1', '2'),
   new Expense(50, '', new Date(), '3', '1', '3'),
+]
+
+const dummySegondTest: Expense[] = [
+  new Expense(300, '', new Date(), '1', '1', '1'),
+  new Expense(300, '', new Date(), '1', '1', '4'),
+  new Expense(100, '', new Date(), '1', '1', '2'),
+  new Expense(50, '', new Date(), '2', '1', '3'),
 ]

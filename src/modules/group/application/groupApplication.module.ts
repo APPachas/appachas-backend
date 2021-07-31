@@ -42,4 +42,4 @@ import { GroupSchema } from '../infrastructure/repository/schemas/group.schema'
     DeleteGroupUseCase,
   ],
 })
-export class ApplicationModule {}
+export class GroupApplicationModule {}

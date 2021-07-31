@@ -14,7 +14,7 @@ import { AuthenticationService } from './services/authentication.service'
     PassportModule,
     JwtModule.register({
       secret: 'secret',
-      signOptions: { expiresIn: '300s' },
+      signOptions: { expiresIn: '86400s' },
     }),
   ],
   providers: [AuthenticationService, JwtStrategy],

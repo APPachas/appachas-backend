@@ -1,10 +1,10 @@
-import { GroupID, UserID } from '../../../../core/types'
+import { GroupID } from '../../../../core/types'
 import Group from '../group'
 
 export interface GroupRepository {
-  create(user: Group): Promise<Group>
-  findAll(userId: UserID): Promise<Group[]>
+  create(group: Group): Promise<Group>
+  findAll(groupId: GroupID): Promise<Group[]>
   findOne(id: GroupID): Promise<Group>
-  update(id: string, user: Group): Promise<Group>
-  delete(id: GroupID): Promise<Group>
+  update(groupId: string, user: Group): Promise<Group>
+  delete(groupId: GroupID): Promise<Group>
 }
